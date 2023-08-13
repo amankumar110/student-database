@@ -13,12 +13,35 @@ showStudents()
     if(counts==0)
         printf("No Student To Show");
     else {
-            int i;
-        for(i=0;i<counts;i++)
-        {
+         int i;
+         for(i=0;i<counts;i++)
+         printf("\nName:%s - Class:%dth - Roll Number:%d - age:%d",students[i].name,students[i].standard,students[i].rollNum,students[i].age);
+         }
+}
+showByRollNumber()
+{
+    printf("\nEnter your roll number\n");
+    int i,rollNum;
+    scanf("%d",&rollNum);
+    for(i=0;i<counts;i++)
+    {
+        if(students[i].rollNum==rollNum)
             printf("\nName:%s - Class:%dth - Roll Number:%d - age:%d",students[i].name,students[i].standard,students[i].rollNum,students[i].age);
+    }
+}
 
-        }
+
+showByName()
+{
+    printf("\nEnter your Exact Name\n");
+    int i;
+    char name[50];
+    fflush(stdin);
+    gets(name);
+    for(i=0;i<counts;i++)
+    {
+        if(strcmp(students[i].name,name)==0)
+            printf("\nName:%s - Class:%dth - Roll Number:%d - age:%d",students[i].name,students[i].standard,students[i].rollNum,students[i].age);
     }
 }
 
@@ -69,61 +92,52 @@ addStudents()
 
 }
 
-// Updating Student's Name
-void updateName(rollNum)
-{
-int i;
-for(i=0;i<counts;i++)
- {
-   if(students[i].rollNum == rollNum)
-   {
+//Update function
+update(ans,rollNum){
+    int i;
+ if (ans==1)
+  {
+
+    for(i=0;i<counts;i++)
+    {
+       if(students[i].rollNum == rollNum)
+       {
        fflush(stdin);
        printf("enter student's new name\n");
        gets(students[i].name);
        printf("%d Name Updated");
        break;
-   }
- }
- if(i==counts)
- printf("\nNo Student found");
-}
-
-void updateClass(rollNum)
-{
-int i;
-for(i=0;i<counts;i++)
+       }
+    }
+  } else if(ans==2) {
+      for(i=0;i<counts;i++)
+      {
+        if(students[i].rollNum == rollNum)
+         {
+         fflush(stdin);
+         printf("enter student's new class\n");
+         gets(students[i].standard);
+         printf("Class Updated");
+         break;
+         }
+      }
+ } else if(ans==3)
  {
-   if(students[i].rollNum == rollNum)
-   {
-       fflush(stdin);
-       printf("enter student's new class\n");
-       gets(students[i].standard);
-       printf("Class Updated");
-       break;
-   }
+      for(i=0;i<counts;i++)
+      {
+        if(students[i].rollNum == rollNum)
+         {
+         fflush(stdin);
+         printf("enter student's new age\n");
+         gets(students[i].age);
+         printf("Age Updated");
+         break;
+         }
+      }
  }
  if(i==counts)
- printf("\nNo Student found");
+    printf("\nNo Student found");
 }
-
-void updateAge(rollNum)
-{
-int i;
-for(i=0;i<counts;i++)
- {
-   if(students[i].rollNum == rollNum)
-   {
-       fflush(stdin);
-       printf("enter student's new age\n");
-       gets(students[i].age);
-       printf("\n Age Updated");
-       break;
-   }
- }
- if(i==counts)
- printf("\nNo Student found");
-}
-
 
 // Updating student
 updateStudent()
@@ -135,11 +149,7 @@ updateStudent()
     printf("\n1 for name \n2 for class \n3 for age ");
     int ans;
     scanf("\n%d",&ans);
-    switch(ans){
-     case 1 : updateName(rollNum);break;
-     case 2 : updateClass(rollNum);break;
-     case 3 : updateAge(rollNum);break;
-    }
+   update(ans,rollNum);
 }
 
 // Main Function
@@ -150,8 +160,10 @@ main()
     {
 
     printf("\nWhat Operation You Want To Perform?\n");
-    printf("Enter 1 for adding students. \nEnter 2 for viewing students. \nEnter 3 for Updating Student Info. \nEnter 4 to delete.\n");
-        printf("\nEnter Command : ");
+    printf("Enter 1 for adding students. \nEnter 2 for viewing students.");
+    printf("\nEnter 3 for Updating Student Info. \nEnter 4 to delete. ");
+    printf("\nEnter 5 for Show by roll number. \nEnter 6 to search by name \n");
+    printf("\nEnter Command : ");
         int ans;
         scanf("\n%d",&ans);
        if(ans==1)
@@ -162,5 +174,9 @@ main()
         updateStudent();
         else if(ans==4)
             deleteStudents();
+        else if(ans==5)
+            showByRollNumber();
+        else if(ans==6)
+            showByName();
     }
 }
