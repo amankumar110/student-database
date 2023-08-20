@@ -8,6 +8,7 @@ The student management system which is used to feed students' information and we
 1. Now you can retrieve the data even when the program is ended because of the file.
 # Menu
 ![Screenshot 2023-08-20 150555](https://github.com/amankumar110/student-database/assets/115738540/52e3a2e0-2f09-428b-b8e1-6cc995d060a9)
+<br>
 The menu is showed up whenever the user opens the program and continues showing up until the program is ended.
 # Adding students
 ![2](https://github.com/amankumar110/student-database/assets/115738540/8472559e-3d9f-49ee-a221-a42933175731)
