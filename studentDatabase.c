@@ -86,18 +86,19 @@ int findIndex(struct student *array, int size, int target) {
 }
 
 //Deleting Students
-deleteStudents()
+deleteStudents(rollNum)
 {
     FILE *fp = fopen(filename,"rb");
-    int rollNum,i,j,k;
+    int i,j,k;
     struct student students[100];
    for(i=0;!feof(fp);i++)
     {
         fread(&students[i],sizeof(students[i]),1,fp);
     }
-    printf("enter roll number for deletion\n");
-    scanf("%d",&rollNum);
+
     int index = findIndex(&students,100,rollNum);
+    if(index!=-1)
+    {
     for(j=index;j<=i;j++)
         students[j]=students[j+1];
     fclose(fp);
@@ -105,7 +106,13 @@ deleteStudents()
     for(k=0;k<i-2;k++)
         fwrite(&students[k],sizeof(struct student),1,fp);
     fclose(fp);
-    printf("\nDeleted Successfully");
+    return (1);
+    } else
+    {
+        printf("delete failed");
+        return (0);
+    }
+
 }
 //Adding Students
 addStudents()
@@ -127,35 +134,24 @@ addStudents()
 
 void updateName()
 {
-    printf("Enter your roll number\n");
-    int rollNum;
-    scanf("%d",&rollNum);
-    FILE *fp = fopen(filename,"rb+");
-    int i,j,k;
-    struct student students[100];
-    for(i=0;!feof(fp);i++)
+    FILE *fp = fopen(filename,"ab+");
+    struct student s;
+    printf("enter roll number: ");
+    scanf("%d",&s.rollNum);
+    printf("Enter The New Name Of Student\n");
+    fflush(stdin);
+    gets(s.name);
+    printf("Enter Your New Class\n");
+    scanf("%d",&s.standard);
+    printf("Enter The New Age\n");
+    scanf("%d",&s.age);
+    int status = deleteStudents(s.rollNum);
+    if(status==1)
     {
-        fread(&students[i],sizeof(students[i]),1,fp);
-    }
-    for(j=0;j<i;j++)
-        if((students[j]).rollNum == rollNum)
-        {
-            char  newName[50];
-            printf("Enter new Name of student: ");
-            scanf("%s",&newName);
-            strcpy(students[j].name,newName);
-            printf("NEW NAME IS %s",students[j].name);
-            break;
-        }
+        printf("\nupdated successfully");
+    } else { printf("\nupdate failed");}
+    fwrite(&s,sizeof(s),1,fp);
     fclose(fp);
-    fp = fopen(filename,"wb");
-    for(k=0;k<i-1;k++)
-    {
-        fwrite(&students[k],sizeof(students[1]),1,fp);
-    }
-    fclose(fp);
-
-
 }
 
 
@@ -180,7 +176,17 @@ main()
        else if(ans==3)
         updateName();
         else if(ans==4)
-            deleteStudents();
+        {
+            int rollNum;
+            printf("Enter roll number for deletion : ");
+            scanf("%d",&rollNum);
+            int status = deleteStudents(rollNum);
+            if(status==1)
+                printf("\ndeleted successfully");
+            else
+                printf("\ndelete failed");
+        }
+
         else if(ans==5)
             showByRollNumber();
         else if(ans==6)
